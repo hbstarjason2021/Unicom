@@ -30,7 +30,7 @@ jobs:
       env:
         USERS_COVER: ${{ secrets.USERS_COVER }}
       run: |
-        git clone -b UnicomTask https://github.com/hbstarjason2021/jd_scripts.git ~/UnicomTask
+        git clone -b UnicomTask https://github.com/hbstarjason2021/Unicom.git ~/UnicomTask
         cd ~/UnicomTask
         pip install -r requirements.txt
         echo "$USERS_COVER" > ./config.json
