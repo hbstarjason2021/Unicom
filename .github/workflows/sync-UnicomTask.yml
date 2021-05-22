@@ -1,7 +1,7 @@
 name: sync-UnicomTask
 on:
-  schedule:
-  - cron:  "1 8 * * fri"
+  #schedule:
+  #- cron:  "1 8 * * fri"
   workflow_dispatch:
   watch:
     types: started
