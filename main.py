@@ -10,14 +10,9 @@ import base64
 
 from requests import post
 
-# 此处改为自己的配置 手机号, 密码, appId
 phone = os.environ["PHONE"]
 password = os.environ["PASSWD"]
 pid = os.environ["TOKEN"]
-# TG配置
-TG_TOKEN = 'xxx'  # TG机器人的TOKEN
-CHAT_ID = 'xxx'  # 推送消息的CHAT_ID
-
 
 class UnicomSign():
 
@@ -176,34 +171,9 @@ class UnicomSign():
             sleep(3)
             res6 = self.request.post("https://act.10010.com/SigninApp/mySignin/addFlow", data=data6, headers=headers)
         print(">>>签到看视频，下载APP流量奖励任务完成！")
-        # 金币抽奖免费3次
-        res7 = self.request.post("https://m.client.10010.com/dailylottery/static/textdl/userLogin", headers=headers)
-        data8 = {
-            'usernumberofjsp': re.findall(r"encryptmobile=(.+?)';", res7.text)[0],
-            'flag': 'convert'
-        }
-        for i in range(3):
-            res8 = self.request.post("https://m.client.10010.com/dailylottery/static/doubleball/choujiang", data=data8, headers=headers)
-            print(">>>金币抽奖：", res8.json()['RspMsg'])
-            self.resp += ">>>金币抽奖：" + res8.json()['RspMsg'] + '\n\n'
-            sleep(3)
-
-
-# TG推送
-def tgPush(telegram_message):
-    params = (
-        ('chat_id', CHAT_ID),
-        ('text', telegram_message),
-        ('parse_mode', "Html"),  # 可选Html或Markdown
-        ('disable_web_page_preview', "yes")
-    )
-    telegram_url = "https://api.telegram.org/bot" + TG_TOKEN + "/sendMessage"
-    post(telegram_url, params=params)
-
 
 if __name__ == '__main__':
     user = UnicomSign()
     user.login(phone, password)  # 用户登录   这里需要更改
     user.daysign()  # 日常签到领积分，1g流量日包
     user.daytask()  # 日常任务
-    tgPush(user.resp)
