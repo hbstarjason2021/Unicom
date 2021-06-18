@@ -171,6 +171,19 @@ class UnicomSign():
             sleep(3)
             res6 = self.request.post("https://act.10010.com/SigninApp/mySignin/addFlow", data=data6, headers=headers)
         print(">>>签到看视频，下载APP流量奖励任务完成！")
+        # 金币抽奖免费3次
+        res7 = self.request.post("https://m.client.10010.com/dailylottery/static/textdl/userLogin", headers=headers)
+        data8 = {
+            'usernumberofjsp': re.findall(r"encryptmobile=(.+?)';", res7.text)[0],
+            'flag': 'convert'
+        }
+        for i in range(3):
+            res8 = self.request.post("https://m.client.10010.com/dailylottery/static/doubleball/choujiang", data=data8,
+                                     headers=headers)
+            if res8.status_code == 200:
+                print(">>>金币抽奖：", res8.json()['RspMsg'])
+                self.resp += ">>>金币抽奖：" + res8.json()['RspMsg'] + '\n\n'
+                sleep(3)
 
 if __name__ == '__main__':
     user = UnicomSign()
