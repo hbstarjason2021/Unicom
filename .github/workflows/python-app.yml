@@ -1,36 +1,50 @@
-# This workflow will install Python dependencies, run tests and lint with a single version of Python
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+#自动调用api保活，加密版
+name: Auto Api Secret
 
-name: Python application
-
-on:
+on: 
+  release:
+    types: [published]
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-
+    tags:
+    - 'v*'
+  #  branches: 
+  #    - master
+  schedule:
+    - cron: '12 6 * * *'
+  watch:
+    types: [started]
+   
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
+    if: github.event.repository.owner.id == github.event.sender.id  # 自己点的 start
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python 3.9
-      uses: actions/setup-python@v2
+    - name: Checkout
+      uses: actions/checkout@master
+    - name: Set up Python #安装python
+      uses: actions/setup-python@v1
       with:
-        python-version: 3.9
-    - name: Install dependencies
+        python-version: 3.8
+    - name: Install requests #安装requests
       run: |
-        python -m pip install --upgrade pip
-        pip install flake8 pytest
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    - name: Lint with flake8
+        pip uninstall crypto pycryptodome
+        pip install pycryptodome
+    - name: Read config from secrets  #读取机密
+      env: 
+        NUMBER: ${{ secrets.NUMBER }}
+        PASSWD: ${{ secrets.PASSWD }}
+        TOKEN: ${{ secrets.TOKEN }}
+    - name: Test Api #Api调用
+      run: | 
+        echo `date +"%Y-%m-%d %H:%M:%S"` begin > time.log
+        python main.py   
+    - name: Commit #上传新的refresh_token到仓库
       run: |
-        # stop the build if there are Python syntax errors or undefined names
-        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-    - name: Test with pytest
-      run: |
-        pytest
+        git config --global user.email AutoupdateRobot@email.com
+        git config --global user.name AutoupdateRobot
+        git add .
+        git commit -m "update new time log" -a
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
