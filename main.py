@@ -10,9 +10,9 @@ import base64
 from requests import post
 
 # 此处改为自己的配置 手机号, 密码, appId
-phone = '13904686771'
-password = '789456'
-pid = '86b8be06f56ba55e9fa7dff134c6b16c948757af8a94e391b66d1f87ca3892d2444ec4fb2b3f3d4e52f25b16e576351c056ed14cc60f277151c4ad22a8b5daac17f8790afc615717866a03218ed86ae9'
+phone = os.environ["PHONE"]
+password = os.environ["PASSWD"]
+pid = os.environ["TOKEN"]
 # TG配置
 TG_TOKEN = 'xxx'  # TG机器人的TOKEN
 CHAT_ID = 'xxx'  # 推送消息的CHAT_ID
