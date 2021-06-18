@@ -1,5 +1,5 @@
 #自动调用api保活，加密版
-name: Auto Api Secret
+name: Python Run
 
 on: 
   release:
@@ -25,10 +25,10 @@ jobs:
       uses: actions/setup-python@v1
       with:
         python-version: 3.8
-    - name: Install requests #安装requests
+    - name: Install requests
       run: |
-        pip install pycrypto
-    - name: Run jobs  #读取机密
+        pip install pycrypto requests wheel
+    - name: Run job
       env: 
         PHONE: ${{ secrets.PHONE }}
         PASSWD: ${{ secrets.PASSWD }}
