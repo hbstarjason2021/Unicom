@@ -1,4 +1,3 @@
-#自动调用api保活，加密版
 name: Python Run
 
 on: 
@@ -17,11 +16,11 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: github.event.repository.owner.id == github.event.sender.id  # 自己点的 start
+    if: github.event.repository.owner.id == github.event.sender.id  # 自己点 star 手动触发
     steps:
     - name: Checkout
       uses: actions/checkout@master
-    - name: Set up Python #安装python
+    - name: Set up Python
       uses: actions/setup-python@v1
       with:
         python-version: 3.6
@@ -36,7 +35,7 @@ jobs:
       run: | 
         echo `date +"%Y-%m-%d %H:%M:%S"` begin > time.log
         python main.py   
-    - name: Commit #上传新的refresh_token到仓库
+    - name: Commit
       run: |
         git config --global user.email AutoupdateRobot@email.com
         git config --global user.name AutoupdateRobot
