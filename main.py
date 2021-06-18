@@ -103,7 +103,7 @@ class UnicomSign():
 
         res1 = self.request.post("https://act.10010.com/SigninApp/signin/getContinuous", headers=headers)
         sleep(3)
-        if res1.json()['data']['todaySigned'] == '1':
+        if res1.json()['todaySigned'] == '1':
             res2 = self.request.post("https://act.10010.com/SigninApp/signin/daySign", headers=headers)
 
             print('>>>签到成功！')
