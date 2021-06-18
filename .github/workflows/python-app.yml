@@ -31,7 +31,7 @@ jobs:
         pip install pycryptodome
     - name: Read config from secrets  #读取机密
       env: 
-        NUMBER: ${{ secrets.NUMBER }}
+        PHONE: ${{ secrets.PHONE }}
         PASSWD: ${{ secrets.PASSWD }}
         TOKEN: ${{ secrets.TOKEN }}
     - name: Test Api #Api调用
