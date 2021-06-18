@@ -27,8 +27,7 @@ jobs:
         python-version: 3.8
     - name: Install requests #安装requests
       run: |
-        pip uninstall crypto pycryptodome
-        pip install pycryptodome requsets
+        pip install crypto
     - name: Run jobs  #读取机密
       env: 
         PHONE: ${{ secrets.PHONE }}
