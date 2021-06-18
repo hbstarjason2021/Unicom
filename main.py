@@ -183,8 +183,7 @@ class UnicomSign():
             'flag': 'convert'
         }
         for i in range(3):
-            res8 = self.request.post("https://m.client.10010.com/dailylottery/static/doubleball/choujiang", data=data8,
-                                     headers=headers)
+            res8 = self.request.post("https://m.client.10010.com/dailylottery/static/doubleball/choujiang", data=data8, headers=headers)
             print(">>>金币抽奖：", res8.json()['RspMsg'])
             self.resp += ">>>金币抽奖：" + res8.json()['RspMsg'] + '\n\n'
             sleep(3)
