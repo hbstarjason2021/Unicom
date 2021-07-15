@@ -37,19 +37,20 @@ PublicKey = G174V7rB8BcEptUPdThi+z8ooGGgYTRHmayTccLTFFI=
 然后运行下面的命令(所有命令都是在英文输入状态下输入)
 apt update
 apt install git vim perl nodejs-lts wget curl nano cronie moreutils
-git clone https://github.com/simo8102/88-AutoSignMachine.git
+git clone https://github.com/simo8102/chinaunicom-AutoSignMachine.git
 看下文件名字
 ls
-记住那个88-AutoSignMachine
+记住那个chinaunicom-AutoSignMachine
+
 然后
-mv   88-AutoSignMachine qd
+mv   chinaunicom-AutoSignMachine qd
 进入这个文件夹里面
 cd qd
 npm install
 等依赖包安装好了就行了
-然后运行下面的命令
+然后运行下面的命令（以后执行只需要输入下面代码即可）
 node index.js unicom --user 11111 --password 1111 --appid 1555555
-node index.js unicom --user 11111 --password 1111 --appid 1555555 --tasks dailygameflow 只运行游戏(https://github.com/simo8102/88-AutoSignMachine/issues/167)
+node index.js unicom --user 11111 --password 1111 --appid 1555555 --tasks dailygameflow 只运行游戏(https://github.com/simo8102/chinaunicom-AutoSignMachine/issues/167)
 ```
 如果多用户就
 启用`node index.js unicom --config default.json`表示配置文件
@@ -92,9 +93,9 @@ https://nodejs.org/zh-cn/download/package-manager/   根据官方文档的步骤
 ##2、安装git（此步可省略 )
 yum install git 或 apt-get install git 
 3、同步代码到本地
-git clone https://github.com/simo8102/88-AutoSignMachine.git
+git clone https://github.com/simo8102/chinaunicom-AutoSignMachine.git
 输入 下面的代码
-cd 88-AutoSignMachine
+cd chinaunicom-AutoSignMachine
 npm install
 node index.js unicom --user 176*********** --password 13 --appid 0******************
 4、写个sh脚本 代码如下
