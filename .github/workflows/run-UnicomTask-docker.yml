@@ -1,0 +1,36 @@
+name: Run-UnicomTask
+
+on:
+  #push:
+  #  branches: main
+  gollum:
+  workflow_dispatch:
+  schedule:
+    - cron: '40 11,22 * * *'
+
+jobs:
+  deploy:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    #- uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+    - uses: actions/cache@v2
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/run_in_Actions/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+    - name: Build and publish
+      env:
+        USERS_COVER: ${{ secrets.USERS_COVER }}
+      run: |
+        git clone -b UnicomTask-docker https://github.com/hbstarjason2021/Unicom.git ~/UnicomTask-docker
+        cd ~/UnicomTask-docker
+        pip install -r requirements.txt
+        echo "$USERS_COVER" > ./config.json
+        python3 index.py
