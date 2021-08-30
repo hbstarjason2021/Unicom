@@ -1,0 +1,38 @@
+name: Run-kkstone
+
+on:
+  #push:
+  #  branches: main
+  gollum:
+  workflow_dispatch:
+  schedule:
+    - cron: '40 11,22 * * *'
+
+jobs:
+  deploy:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    #- uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+    - uses: actions/cache@v2
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/run_in_Actions/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+    - name: Build and publish
+      env:
+        PHONE: ${{ secrets.UNICOM_USER }}
+        PASSWD: ${{ secrets.UNICOM_PASSWORD }}
+        TOKEN: ${{ secrets.UNICOM_APPID }}
+      run: |
+        git clone -b kkstone https://github.com/hbstarjason2021/Unicom.git ~/kkstone
+        cd ~/kkstone
+        #pip install -r requirements.txt
+        pip install pycrypto requests wheel
+        python main.py
