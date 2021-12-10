@@ -28,8 +28,8 @@ jobs:
     - name: RUN
       run: |
         git clone -b wuye999 https://github.com/hbstarjason2021/Unicom.git ~/wuye999 && cd ~/wuye999/unicom-task/
-        #pip install -r requirements.txt
-        pip3 install lxml pytz requests rsa PyExecJS pycryptodomex util
+        pip install -r requirements.txt
+        #pip3 install lxml pytz requests rsa PyExecJS pycryptodomex util
         export unicom_config_1="${{ secrets.UNICOM_USER }}<<<${{ secrets.UNICOM_PASSWORD }}<<<${{ secrets.UNICOM_APPID }}<<<3<<<<<<"
         export unicom_womail_1="${{ secrets.WOMAIL_URL }}"
         python3 unicom_index.py
